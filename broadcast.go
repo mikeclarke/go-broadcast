@@ -33,7 +33,10 @@ func (b *Broadcaster) loop() {
 }
 
 func NewBroadcaster() *Broadcaster {
-	b := new(Broadcaster)
+	b := &Broadcaster{
+		inc: make(chan Message),
+		registryc: make(chan MessageChannel),
+	}
 	go b.loop()
 	return b
 }
