@@ -13,13 +13,13 @@ func TestBroadcaster(t *testing.T) {
 	done := make(chan bool)
 
 	// Initialize broadcaster
-	b := NewBroadcaster()
+	b := NewBroadcaster(1024)
 
 	// Start listener
 
 	// Create 10 listeners, send results to shared `output` channel
 	for x := 0; x < 10; x++ {
-		new_listener := b.Listen()
+		new_listener := b.Listen(1024)
 		listeners = append(listeners, new_listener)
 		t.Logf("Added listener %d", x)
 

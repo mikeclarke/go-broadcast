@@ -13,8 +13,8 @@ func (b *Broadcaster) Write(v Message) {
 	b.inc <- v
 }
 
-func (b *Broadcaster) Listen() (chan Message) {
-	c := make(chan Message)
+func (b *Broadcaster) Listen(bufferSize int) (chan Message) {
+	c := make(chan Message, bufferSize)
 	b.registryc <- c
 	return c
 }
@@ -32,9 +32,9 @@ func (b *Broadcaster) loop() {
 	}
 }
 
-func NewBroadcaster() *Broadcaster {
+func NewBroadcaster(bufferSize int) *Broadcaster {
 	b := &Broadcaster{
-		inc: make(chan Message),
+		inc: make(chan Message, bufferSize),
 		registryc: make(chan MessageChannel),
 	}
 	go b.loop()
